@@ -5,11 +5,17 @@ import "testing"
 var (
 	emptyOffsetFetchResponse = []byte{
 		0x00, 0x00, 0x00, 0x00}
+	emptyOffsetFetchResponseV2 = []byte{
+		0x00, 0x00, 0x00, 0x00,
+		0x00, 0x2A}
 )
 
 func TestEmptyOffsetFetchResponse(t *testing.T) {
 	response := OffsetFetchResponse{}
 	testResponse(t, "empty", &response, emptyOffsetFetchResponse)
+
+	responseV2 := OffsetFetchResponse{Version: 2, Err: ErrInvalidRequest}
+	testResponse(t, "emptyV2", &responseV2, emptyOffsetFetchResponseV2)
 }
 
 func TestNormalOffsetFetchResponse(t *testing.T) {
