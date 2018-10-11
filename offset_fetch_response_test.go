@@ -25,4 +25,11 @@ func TestNormalOffsetFetchResponse(t *testing.T) {
 	// The response encoded form cannot be checked for it varies due to
 	// unpredictable map traversal order.
 	testResponse(t, "normal", &response, nil)
+
+	responseV2 := OffsetFetchResponse{Version: 2, Err: ErrInvalidRequest}
+	responseV2.AddBlock("t", 0, &OffsetFetchResponseBlock{0, "md", ErrRequestTimedOut})
+	responseV2.Blocks["m"] = nil
+	// The response encoded form cannot be checked for it varies due to
+	// unpredictable map traversal order.
+	testResponse(t, "normalV2", &responseV2, nil)
 }
